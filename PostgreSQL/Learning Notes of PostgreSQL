@@ -1,0 +1,30 @@
+两天时间过了下《深入浅出PostgreSQL》,基于对Oracle的现阶段理解，主要列出如下笔记，重点在于和Oracle的不同之处。
+
+PostgreSQL - 对象关系型数据库管理系统
+1. 使用模式匹配运算符，like运算符，similar to运算符和POSIX正则表达式
+    'abc' similar to 'abc'          true
+    'abc' similar to 'a'            false
+    'abc' similar to '%(b|d)%'      true
+    'abc' similar to '(b|c)%'       false
+
+    'thomas'~'.*thomas.*'   匹配正则表达式，区分大小写
+    'thomas'~*'Thomas.*'    匹配正则表达式，不区分大小写
+    'thomas'!~'.*Thomas.*'  不匹配正则表达式，区分大小写
+    'thomas'!~*'.*'vadim.*  不匹配正则表达式，不区分大小写
+2. 基本数据中包含几何类型，点，线，线段，矩阵，路径，多边形，圆
+3.[重点]JSON数据类型
+
+4.索引：多列索引，组合索引，唯一索引，【新】表达式索引，部分索引
+        B-Tree索引，Hash索引，GiST索引(Generalized Search Tree)，SP-GiST索引（Space-Partitioned GiST），
+        GIN索引（广义倒排索引),BRIN索引（块范围索引）
+        GIN索引适用于搜索JSON数据。
+        使用BRIN索引快速检索时间类型数据。
+5. 【重点】表继承。表分区和Oracle差别不是很大
+6.事务
+    WAL（Write-Ahead Logging）是一种实现事务日志的标准方法。核心机制是，在对于数据进行任何变更之前，
+    先确保对数据库的所有写操作都已经记录到WAL日志中，从而保证事务的更新不会丢失。
+    Checkpoint机制
+7. PL/pgSQL编程，和Oracle的PL/SQL非常相似。
+8. 高可用方案， 一主多备份，暖备和热备。实现自动故障接管（Failover）。WAL归档和流复制。
+
+等以后实用了再补点实用的查询和案例。
